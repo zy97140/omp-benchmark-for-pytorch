@@ -63,6 +63,7 @@ where `benchmark num` is an integer among `1, 2, 3`, set it to `1` will reproduc
 
 ### 4. The benchmark result
 We will release the benchmark on a desktop CPU, and server CPUs like Xeon and Xeon Phi. The specific model is below here.
+
 |Type|desktop|Xeon|Xeon Phi|
 |---|---:|---:|---:|
 |Model|i7-5960X|E5-2699 v4|CPU 7250F|
@@ -79,6 +80,7 @@ Operation: add
 Tensor Continuity: contiguous  
 Unit: s  
 Time cost result is below.  
+
 |Tensor Size|Official version|Intel version|SpeedUp|
 |---|---:|---:|---:|
 |110k|	1.17E-05|	5.72E-06|		2.05X|
@@ -99,6 +101,7 @@ Tensor Continuity: contiguous
 Unit: second  
 
 Time cost result is below:  
+
 |Tensor Size|serialize|parallelize|SpeedUp|
 |---|---:|---:|---:|
 |1k	|8.10E-07	|2.03E-06|		0.40X      |
@@ -122,6 +125,7 @@ Tensor Continuity: contiguous
 Unit: second
 
 Time cost result is below:  
+
 |Tensor Size|serialize|parallelize|SpeedUp|
 |---|---:|---:|---:|
 |1k		|1.41E-06|	2.31E-06|		0.61X |
@@ -151,6 +155,7 @@ Tensor Continuity: discontiguous
 Unit: second 
 
 Time cost result is below:  
+
 |Tensor Size|serialize|parallelize|SpeedUp|
 |---|---:|---:|---:|
 |1k|	4.06E-05    |	4.08E-05	|	0.99X |
@@ -174,6 +179,7 @@ Tensor Continuity: discontiguous
 Unit: second  
 
 Time cost result is below:  
+
 |Tensor Size|serialize|parallelize|SpeedUp|
 |---|---:|---:|---:|
 |1k	|3.10E-05	    |3.29E-05	|	0.94X|
