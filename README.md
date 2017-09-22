@@ -15,9 +15,10 @@ Slice operation of tensor is very common in science computation. Using slice ope
 
 ### 3. Installation and test
 #### 3.1 Installation
-Official Pytorch   
+##### Official Pytorch   
 Please refer to official [__link__](https://github.com/pytorch/pytorch)  
-Intel-Pytorch 
+##### Intel-Pytorch 
+The installation instruction is mainly modified from official pytorch. You should be care of the branch is __dev-omp2__
 To get a high quality BLAS library (MKL) and a convenient package manager conda, we highly recommend you to install [Anaconda](https://www.continuum.io/downloads) environment.
 
 Once you have [Anaconda](https://www.continuum.io/downloads) installed, you can follow the instructions below:
@@ -39,7 +40,7 @@ source your-env-path/bin/activate ---to enter an environment
 ```
 Download intel pytorch source code.
 ```bash
-git clone --recursive -b dev-omp https://github.com/intel/pytorch.git
+git clone --recursive -b dev-omp2 https://github.com/intel/pytorch.git
 ```
 Before installing, you should disable the CUDA support, and set the CMAKE_PREFIX_PATH.
 ```
@@ -56,9 +57,9 @@ python setup.py install
 The performance data in Cloumn 2 of table below can be collected from offcial pytorch. And that in Column 3 can be collected from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.
 You can get the performance data by using the command format below after activate your corresponding pytorch. You must be aware of which pytorch you are using.
 ```bash
-python benchmark.py <benchmark num><output file name> 
+python benchmark.py <benchmark num> <output file name> 
 ```
-where `benchmark num` is an integer among `1, 2, 3`, set it to `1` will reproduce benchmark in section 4.1, to 2 reproduce benchmark in section 4.2, to 3 reproduce benchmark in section 4.3.  
+where `benchmark num` is an integer among `1, 2, 3`, set it to `1` for benchmark in section 4.1, to 2 for benchmark in section 4.2, to 3 for benchmark in section 4.3.  
 
 
 ### 4. The benchmark result
@@ -90,7 +91,7 @@ Time cost result is below.
 
 ![](benchmark-charts/contiguous_add_bigsize.png "add operation when parallelizing in offical and Intel version")
 
-Both of the two versions use openmp to parallelize the add operation. And they both use Intel Intrinsics as SIMD to implement vectorization. We should pay attention to the remainder part when using SIMD. The offical version [split](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L51-L62) the size of tensors and assign some to different threads first and then use [SIMD](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16). It maybe results in a remainder part in each thread. But Intel version think the remainder from SIMD first and make sure there is no remainder in each thread when doing parallelism. 
+Both of the two versions use openmp to parallelize the add operation. And they both use Intel Intrinsics as SIMD to implement vectorization. We should pay attention to the remainder part when using SIMD. The official version [splits](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L51-L62) the size of tensors and assigns some to different threads first and then use [SIMD](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16). It maybe results in a remainder part in each thread. But Intel version think the remainder from SIMD first and make sure that there is no remainder in each thread when doing parallelism. 
 
 #### 4.2 Openmp overhaed threshold of official Pytorch is too high
 We choose add and copy operation for contiguous tensors that are less than 100K as the test case. The code of official version runs serailly and the Intel version runs parallelly. 
