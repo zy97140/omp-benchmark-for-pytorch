@@ -5,9 +5,9 @@ Pytorch element-wise operations benchmark with OpenMP
 Providing benchmarks for basic elementwise operationon with or without openmp on different CPUs. Benchmark time data of copy and addition operation is available for now.  
 
 Some general conclusions from this benchmarking:    
-- Openmp usage of offcial version for contiguous tensor can be improved further. Intel version achieve nearly 1.5X on add operation when tensor size is greater than 100K.
-- The openmp overhead threshold of official Pytorch is set too high, so that a lot of small and medium size tensor could not benefit from openmp parallelelism.
-- No matter the tensors are contiguous or not, most operations can be boost by openmp.
+- Openmp usage of offcial version for contiguous tensor can be improved further. Intel version achieve more than 1.5X on add operation when tensor size is greater than 100K.
+- The openmp overhead threshold of official Pytorch is set too high, so that a lot of small and medium size tensors could not benefit from openmp parallelelism.
+- No matter tensors are contiguous or not, most operations can be boosted by openmp.
 - Setting the openmp overhead threshold to 2k~10k is OK, it is dependent on the specific operation and your CPU. We even set the value to 720 in our previous case for OpenNMT and achieve good performance.  
 
 ### 2. Our main work
@@ -88,7 +88,7 @@ Time cost result is below.
 |150k|	1.31E-05|	7.47E-06|		1.75X|
 |180k|	1.36E-05|	8.24E-06|		1.65X|
 
-![][benchmark-charts/contiguous_add_bigsize]
+![](benchmark-charts/contiguous_add_bigsize.png "add operation when parallelizing in offical and Intel version")
 
 Both of the two versions use openmp to parallelize the add operation. And they both use Intel Intrinsics as SIMD to implement vectorization. We should pay attention to the remainder part when using SIMD. The offical version [split](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L51-L62) the size of tensors and assign some to different threads first and then use [SIMD](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16). It maybe results in a remainder part in each thread. But Intel version think the remainder from SIMD first and make sure there is no remainder in each thread when doing parallelism. 
 
@@ -140,7 +140,7 @@ Time cost result is below:
 |80k	|2.32E-05|	4.34E-06|		5.34X |
 |100k	|2.84E-05|	5.27E-06|		5.38X |
 
-![][benchmark-charts/contiguous_add]
+![](benchmark-charts/contiguous_add)
 
 Conclusion: Setting the threshold to 8K is good. 
 
@@ -170,7 +170,7 @@ Time cost result is below:
 |80k|	0.002426437 |	0.000347781 |	6.98X |
 |100k|	0.003033556 |	0.000668404 |	4.54X |
 
-![][benchmark-charts/discontiguous_copy]
+![](benchmark-charts/discontiguous_copy.png "copy discontiguous tensor")
 
 Conclusion: Setting the threshold to 4K is good. 2K maybe is also a good choice if considering test error.
    
@@ -194,7 +194,7 @@ Time cost result is below:
 |80k|0.002441799	|0.000360663|	6.77X|
 |100k|0.003052302	|0.00044265 |	6.09X|
 
-![][benchmark-charts/discontiguous_add]
+![](benchmark-charts/discontiguous_add.png "add discontiguous tensor")
 
 Conclusion: Setting the threshold to 5K is good. 
 
