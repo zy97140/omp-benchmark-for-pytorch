@@ -95,9 +95,9 @@ Time cost result is below.
 
 Both of the two versions use openmp to parallelize the add operation. And they both use Intel Intrinsics as SIMD to implement vectorization. We should pay attention to the remainder part when using SIMD. The official version [splits](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L51-L62) the size of tensors and assigns some to different threads first and then use [SIMD](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16). It maybe results in a remainder part in each thread. But Intel version think the remainder from [SIMD first](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L187) and make sure that there is no remainder in each thread when doing [parallelism](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L174-L177). 
 
-#### 4.2 Openmp overhaed threshold of official Pytorch is too high
-We choose add and copy operation for contiguous tensors that are less than 100K as the test case. The code of official version runs serailly and the Intel version runs parallelly. 
-You can use the two versions as test method to reproduce the data.
+#### 4.2 Openmp overhead threshold of official Pytorch is too high
+We choose add and copy operation for contiguous tensors that are less than 100K as the test case.  
+The code of official version runs serailly and the Intel version runs parallelly. You can use the two different pytorch versions as test method to get data from serailized operation or parallelized one.
 
 Operation: copy  
 Tensor Continuity: contiguous  
