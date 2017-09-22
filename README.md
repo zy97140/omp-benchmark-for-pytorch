@@ -77,7 +77,7 @@ The data we achieved for now is from the desktop CPU. You must note that all the
 We choose add operation for contiguous tensors that are greater than 100K as the test case. Because:
 - Official version does not support parallelsim for distontiguous tensor.  
 - Official version does not support copy parallelism. [Link](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorCopy.c#L77).    
-- The value is set to 100k because official version set the openmp overhead threshold as [100K](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L13).   
+- The value is set to >100k because official version set the openmp overhead threshold as [100K](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L13).   
 
 Operation: add  
 Tensor Continuity: contiguous  
