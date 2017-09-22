@@ -140,7 +140,7 @@ Time cost result is below:
 |80k	|2.32E-05|	4.34E-06|		5.34X |
 |100k	|2.84E-05|	5.27E-06|		5.38X |
 
-![](benchmark-charts/contiguous_add)
+![](benchmark-charts/contiguous_add.png "add contiguous tensor") 
 
 Conclusion: Setting the threshold to 8K is good. 
 
