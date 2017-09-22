@@ -116,7 +116,7 @@ Time cost result is below:
 |80k|2.29E-05	|4.18E-06|		5.49X      |
 |100k|2.82E-05	|4.67E-06|		6.05X      |
 
-![[benchmark-charts/contiguous_copy]]
+[![benchmark-charts/contiguous_copy]]
 
 Conclusion: Setting the threshold to 10K is good. 
 
