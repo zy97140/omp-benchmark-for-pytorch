@@ -79,7 +79,7 @@ We choose add operation for contiguous tensors that are greater than 100K as the
 
 Operation: add  
 Tensor Continuity: contiguous  
-Unit: s  
+Unit: second  
 Time cost result is below.  
 
 |Tensor Size|Official version|Intel version|SpeedUp|
