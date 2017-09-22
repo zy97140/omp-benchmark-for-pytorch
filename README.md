@@ -18,7 +18,7 @@ Slice operation of tensor is very common in science computation. Using slice ope
 ##### Official Pytorch   
 Please refer to official [__link__](https://github.com/pytorch/pytorch)  
 ##### Intel-Pytorch 
-The installation instruction is mainly modified from official pytorch. You should be care of the branch is __dev-omp2__
+The installation instruction is mainly modified from official pytorch. You should be care of the branch is __dev-omp2_.  _
 To get a high quality BLAS library (MKL) and a convenient package manager conda, we highly recommend you to install [Anaconda](https://www.continuum.io/downloads) environment.
 
 Once you have [Anaconda](https://www.continuum.io/downloads) installed, you can follow the instructions below:
