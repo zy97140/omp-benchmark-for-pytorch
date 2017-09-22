@@ -19,6 +19,8 @@ Slice operation of tensor is very common in science computation. Using slice ope
 Please refer to official [__link__](https://github.com/pytorch/pytorch)  
 ##### Intel-Pytorch 
 The installation instruction is mainly modified from official pytorch. You should be care of the branch is __dev-omp2__.  
+
+
 To get a high quality BLAS library (MKL) and a convenient package manager conda, we highly recommend you to install [Anaconda](https://www.continuum.io/downloads) environment.
 
 Once you have [Anaconda](https://www.continuum.io/downloads) installed, you can follow the instructions below:
@@ -54,12 +56,12 @@ python setup.py install
 
 
 #### 3.2 Test
-The performance data in Cloumn 2 of table below can be collected from offcial pytorch. And that in Column 3 can be collected from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.
-You can get the performance data by using the command format below after activate your corresponding pytorch. You must be aware of which pytorch you are using.
+The performance data in Cloumn 2 of table below can be collected from offcial pytorch. And that in Column 3 can be collected from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.  
+You can get the performance data by using the command format below after activating your corresponding pytorch. You must be aware of which pytorch you are using.
 ```bash
 python benchmark.py <benchmark num> <output file name> 
 ```
-where `benchmark num` is an integer among `1, 2, 3`, set it to `1` for benchmark in section 4.1, to 2 for benchmark in section 4.2, to 3 for benchmark in section 4.3.  
+where `benchmark num` is an integer among `1, 2, 3`, set it to `1` for benchmark in section 4.1, to `2` for benchmark in section 4.2, to `3` for benchmark in section 4.3.  
 
 
 ### 4. The benchmark result
