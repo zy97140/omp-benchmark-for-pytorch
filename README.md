@@ -1,17 +1,17 @@
-Pytorch element-wise operations benchmark with OpenMP
+Pytorch element-wise operations optimization benchmark
 =======
 
 ### 1. Abstract
-Providing benchmarks for basic elementwise operationon with or without openmp on different CPUs. Benchmark time data of copy and addition operation is available for now.  
+Providing benchmarks for basic elementwise operation with or without openmp on different CPUs. Benchmark time data of copy and addition operation is available for now.  
 
 Some general conclusions from this benchmarking:    
-- Openmp usage of offcial version for contiguous tensor can be improved further. Intel version achieve more than 1.5X on add operation when tensor size is greater than 100K.
-- The openmp overhead threshold of official Pytorch is set too high, so that a lot of small and medium size tensors could not benefit from openmp parallelelism.
+- Openmp usage of official version for contiguous tensor can be improved further. Intel version achieve more than 1.5X on add operation when tensor size is greater than 100K.
+- The openmp overhead threshold of official Pytorch is set too high, so that a lot of small and medium size tensors could not benefit from openmp parallelism.
 - No matter tensors are contiguous or not, most operations can be boosted by openmp.
 - Setting the openmp overhead threshold to 2k~10k is OK, it is dependent on the specific operation and your CPU. We even set the value to 720 in our previous case for OpenNMT and achieve good performance.  
 
 ### 2. Our main work
-Slice operation of tensor is very common in science computation. Using slice operation will generate discontiguous tensor. [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontiguous tensor for the moment. You can download a beta version which has enabled such feature from [__Intel-Pytorch__](https://github.com/intel/pytorch) to test the benchmark. The development branch is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) . We are also engaging to contribute our work to official Pytorch, the correspoding branch is  [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).
+Slice operation of tensor is very common in science computation. Using slice operation will generate discontinuous tensor. [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontinuous tensor for the moment. You can download a beta version which has enabled such feature from [__Intel-Pytorch__](https://github.com/intel/pytorch) to test the benchmark. The development branch is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) . We are also engaging to contribute our work to official Pytorch, the corresponding branch is  [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).
 
 ### 3. Installation and test
 #### 3.1 Installation
@@ -56,7 +56,7 @@ python setup.py install
 
 
 #### 3.2 Test
-The performance data in Cloumn 2 of table below can be collected from offcial pytorch. And that in Column 3 can be collected from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.  
+The performance data in Column 2 of table below can be collected from official pytorch. And that in Column 3 can be collected from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.  
 You can get the performance data by using the command format below after activating your corresponding pytorch. You must be aware of which pytorch you are using.
 ```bash
 python benchmark.py <benchmark num> <output file name> 
@@ -75,7 +75,7 @@ The data we achieved for now is from the desktop CPU. You must note that all the
 
 #### 4.1  Parallelism implementation of official version can be improved.
 We choose add operation for contiguous tensors that are greater than 100K as the test case. Because:
-- Official version does not support parallelsim for distontiguous tensor.  
+- Official version does not support parallelism for discontinuous tensor.  
 - Official version does not support copy parallelism. [Link](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorCopy.c#L77).    
 - The value is set to >100k because official version set the openmp overhead threshold as [100K](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L13).   
 
