@@ -2,26 +2,27 @@ Pytorch element-wise operations optimization benchmark
 =======
 
 ### 1. Abstract
-Providing benchmarks for basic elementwise operation with or without openmp on different CPUs. Benchmark time data of copy and addition operation is available for now.  
+Providing a benchmark for basic elementwise operation with or without optimization on different models of CPU. Benchmark data of copy and add operation is available now.   
 
-Some general conclusions from this benchmarking:    
-- Openmp usage of official version for contiguous tensor can be improved further. Intel version achieve more than 1.5X on add operation when tensor size is greater than 100K.
-- The openmp overhead threshold of official Pytorch is set too high, so that a lot of small and medium size tensors could not benefit from openmp parallelism.
-- No matter tensors are contiguous or not, most operations can be boosted by openmp.
-- Setting the openmp overhead threshold to 2k~10k is OK, it is dependent on the specific operation and your CPU. We even set the value to 720 in our previous case for OpenNMT and achieve good performance.  
+Some general conclusions from this benchmarking:  
+- The optimization of official version for contiguous tensor can be improved further. Intel version achieve more than 1.5X on add operation when tensor size is greater than 100K.
+- The OpenMP overhead threshold of official version is too high to help small and medium size tensors benefit from OpenMP parallelism.
+- No matter tensors are contiguous or not, most operations can be boosted by OpenMP.
+- Setting the OpenMP overhead threshold to 2k~10k is OK, it is dependent on the specific operation and the CPU model. We even set the value to 720 in our previous case for OpenNMT and gain good performance.  
+
 
 ### 2. Our main work
-Slice operation of tensor is very common in science computation. Using slice operation will generate discontinuous tensor. [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontinuous tensor for the moment. You can download a beta version which has enabled such feature from [__Intel-Pytorch__](https://github.com/intel/pytorch) to test the benchmark. The development branch is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) . We are also engaging to contribute our work to official Pytorch, the corresponding branch is  [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).
-
+-	Parallelized many operations of discontiguous tensors by using multi-threads  
+Slice operation of tensor is very common in science computation. Using slice operation will generate discontinuous tensor. Meanwhile, [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontinuous tensor for the moment. The beta development branch of Intel Version is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2). We are also engaging to contribute our work to official Pytorch, the corresponding branch is [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).  
+-	Accelerate many operations of contiguous tensors  furtherly by using multi-threads and SIMD  
 ### 3. Installation and test
 #### 3.1 Installation
 ##### Official Pytorch   
 Please refer to official [__link__](https://github.com/pytorch/pytorch)  
-##### Intel-Pytorch 
-The installation instruction is mainly modified from official pytorch. You should be care of the branch is __dev-omp2__.  
+##### Intel Pytorch 
+The installation manual is mainly modified from official pytorch. What you should be care of is that the branch is __dev-omp2__.  
 
-
-To get a high quality BLAS library (MKL) and a convenient package manager conda, we highly recommend you to install [Anaconda](https://www.continuum.io/downloads) environment.
+To get a high quality BLAS library (MKL) and a convenient package manager conda, we highly recommend you to install [Anaconda](https://www.continuum.io/downloads) environment. 
 
 Once you have [Anaconda](https://www.continuum.io/downloads) installed, you can follow the instructions below:
 
@@ -56,8 +57,8 @@ python setup.py install
 
 
 #### 3.2 Test
-The performance data in Column 2 of table below can be collected from official pytorch. And that in Column 3 can be collected from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.  
-You can get the performance data by using the command format below after activating your corresponding pytorch. You must be aware of which pytorch you are using.
+The performance data in Column 2 of table below can be collected from official pytorch. And that in Column 3 is from branch  [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2) of Intel pytorch.  
+You can get the performance data by using the format of command below after activating your corresponding pytorch. You must be aware of which pytorch you are using.
 ```bash
 python benchmark.py <benchmark num> <output file name> 
 ```
