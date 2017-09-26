@@ -13,7 +13,7 @@ Some general conclusions from this benchmarking:
 
 ### 2. Our main work
 -	Parallelized many operations of discontiguous tensors by using multi-threads  
-Slice operation of tensor is very common in science computation. Using slice operation will generate discontinuous tensor. Meanwhile, [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontinuous tensor for the moment. The beta development branch of Intel Version is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2). We are also engaging to contribute our work to official Pytorch, the corresponding branch is [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).  
+Slice operation of tensor is very common in science computation. Using slice operation will generate discontinuous tensor. Meanwhile, [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontinuous tensor for the moment. The beta development branch of Intel version is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2). We are also engaging to contribute our work to official Pytorch, the corresponding branch is [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).  
 -	Accelerate many operations of contiguous tensors  furtherly by using multi-threads and SIMD  
 ### 3. Installation and test
 #### 3.1 Installation
@@ -72,13 +72,14 @@ We will release the benchmark on a desktop CPU, and server CPUs like Xeon and Xe
 |---|---:|---:|---:|
 |Model|i7-5960X|E5-2699 v4|CPU 7250F|
 
-The data we achieved for now is from the desktop CPU. You must note that all the data are collected from desktop CPU Intel(R) Core(TM) i7-5960X CPU @ 3.00GHz, The data may fluctuate in the same model CPUs because of complex environment.
+The data we achieved for now is from the desktop CPU. The data may fluctuate a little in a same CPU because of the complex environment.
 
-#### 4.1  Parallelism implementation of official version can be improved.
+#### 4.1  The optimization of official version for contiguous tensor can be improved further.
 We choose add operation for contiguous tensors that are greater than 100K as the test case. Because:
 - Official version does not support parallelism for discontinuous tensor.  
 - Official version does not support copy parallelism. [Link](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorCopy.c#L77).    
 - The value is set to >100k because official version set the openmp overhead threshold as [100K](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L13).   
+So that what we test will be parallelized by the two version.
 
 Operation: add  
 Tensor Continuity: contiguous  
@@ -94,11 +95,11 @@ Time cost result is below.
 
 ![](benchmark-charts/contiguous_add_bigsize.png "add operation when parallelizing in offical and Intel version")
 
-Both of the two versions use openmp to parallelize the add operation. And they both use Intel Intrinsics as SIMD to implement vectorization. We should pay attention to the remainder part when using SIMD. The official version [splits](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L51-L62) the size of tensors and assigns some to different threads first and then use [SIMD](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16). It maybe results in a remainder part in each thread. But Intel version think the remainder from [SIMD first](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L187) and make sure that there is no remainder in each thread when doing [parallelism](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L174-L177). 
+Both of the two versions use openmp to parallelize the add operation. And they both use Intel intrinsic as SIMD. The remainder part from SIMD should be handled carefully to get better performance. The official version [splits](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/generic/THTensorMath.c#L51-L62) tensors to many parts and assigns one to each thread first and then uses [SIMD](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16). It maybe results in a remainder part in each thread. But Intel version think the remainder from [SIMD](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L187) first and make sure that there is no remainder in each thread when doing [parallelism](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L174-L177). 
 
 #### 4.2 Openmp overhead threshold of official Pytorch is too high
 We choose add and copy operation for contiguous tensors that are less than 100K as the test case.  
-The code of official version runs serailly and the Intel version runs parallelly. You can use the two different pytorch versions as test method to get data from serailized operation or parallelized one.
+From 4.1, it is easy to understand That the operation of official version runs serailly. However, the threshold of Intel version is set to [800](https://github.com/intel/pytorch/blob/dev-omp2/torch/lib/TH/vector/AVX.c#L12). So that the operation of Intel version runs parallelly. 
 
 Operation: copy  
 Tensor Continuity: contiguous  
@@ -151,8 +152,8 @@ Conclusion: Setting the threshold to 8K is good.
 If you are familar of pytorch or torch [code](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16) and SIMD(2x256bit = 8x64bit = 8xsizeof(double)), you will know 2k may be OK if not using SIMD. It will be verified in next section.
 
 ### 4.3 openmp can speedup most of discontiguous tensor operations
-We choose add and copy operation for discontiguous tensors that are not great than 100K as the test case. The code of official version runs serailly and the Intel version runs parallelly. 
-You can use the two versions as test method to reproduce the data.
+We choose add and copy operation for discontiguous tensors that are not great than 100K as the test case.   
+From 4.1 and 4.2, it is easy to understand that the code of official version runs serailly and the Intel version runs parallelly. 
 
 Operation: copy  
 Tensor Continuity: discontiguous  
