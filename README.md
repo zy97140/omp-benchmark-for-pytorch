@@ -14,7 +14,7 @@ Some general conclusions from this benchmark:
 ### 2. Our main work
 - Parallel many operations of discontinuous tensors by using multi-threads  
 Slice operation of tensor is very common in science computation. Using slice operation will generate discontinuous tensor. Meanwhile, [__Official Pytorch__](https://github.com/pytorch/pytorch) does not support parallelism for discontinuous tensor for the moment. The beta development branch of Intel version is [__dev-omp2__](https://github.com/intel/pytorch/tree/dev-omp2). We are also engaging to contribute our work to official Pytorch, the corresponding branch is [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).  
--	Try to find suitable OpenMP overhead threshold to maximize the effectiveness of multi-thread programming
+-	Try to find suitable OpenMP overhead threshold to maximize the effectiveness of multi-thread programming  
 Official Pytorch set the OpenMP overhead threshold to 100K, we benchmarked copy, add, div, exp, sin operation in both contiguous and discontinuous cases on different CPU models to show that this threshold is too high. We also give a rough estimation of OpenMP overhead threshold in these cases.
 
   
@@ -129,7 +129,7 @@ Time cost result is below:
 
 ![](benchmark-charts/skx-contiguous-exp.png "skx exp contiguous tensor")
 
-Conclusion: Setting the threshold to 1K is good for exponential operation.
+Conclusion: Setting the threshold to 1K is good for exponential operation.  
 If you are familar of pytorch or torch [code](https://github.com/pytorch/pytorch/blob/master/torch/lib/TH/vector/AVX.c#L13-L16) and SIMD(2x256bit = 8x64bit = 8xsizeof(double)), you will know 2k may be OK if not using SIMD. It will be verified in next section.
 
 From above results, it is easy to understand that,
@@ -226,7 +226,7 @@ Platform: Platinum 8180
 |discontinuous exp	|1k	|  
 |discontinuous sin	|2k |   
 
-###4. Conclusions
+### 4. Conclusions
 - Different operations have their own optimal OpenMP overhead threshold, but 100K is never suitable.
 - OpenMP overhead threshold for specific operation goes low as the operation consumes more time.
 - Discontinuous operation can be improved a lot using OpenMP optimization.
