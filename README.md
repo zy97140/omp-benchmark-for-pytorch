@@ -204,7 +204,8 @@ Time cost result is below:
 |110k|983.76	|29.79	|	33.01X|
 |120k|1050.07	|31.87	|	32.94X|
 |150k|1341.23	|37.59	|	35.67X|
-|180k|1584.88	|43.27	|	36.62X|
+|180k|1584.88	|43.27	|	36.62X|  
+
 ![](benchmark-charts/skx-discontiguous-exp.png "exp discontinuous tensor")
 
 Conclusion: Setting the threshold to 1K is good. 
