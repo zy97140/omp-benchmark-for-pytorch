@@ -81,10 +81,10 @@ The data we achieved for now is from the server CPU. The data may fluctuate a li
 #### 4.1 OpenMP overhead threshold of official Pytorch is too high
 We choose add, exp operation for contiguous tensors that are smaller than 100K and larger than 800 as the test case. We compiled two versions of official Pytorch, which only differs in the OpenMP overhead threshold. In the first version we set the threshold to 100K,  so all test case we choose will run serially.  In the second version we set the threshold to 800, so all test case we choose will run serially. 
 
-Platform: Platinum 8180
-Operation: add
-Tensor Continuity: contiguous  
-Unit: microsecond  
+Platform: Platinum 8180  
+Operation: add  
+Tensor Continuity: contiguous    
+Unit: microsecond    
 
 Time cost result is below:  
 
@@ -106,10 +106,10 @@ Time cost result is below:
 
 Conclusion: Setting the threshold to 80K is good for add operation. 
 
-Platform: Platinum 8180
-Operation: exp
-Tensor Continuity: contiguous  
-Unit: microsecond  
+Platform: Platinum 8180  
+Operation: exp  
+Tensor Continuity: contiguous    
+Unit: microsecond    
 
 Time cost result is below:  
 
@@ -140,21 +140,22 @@ From above results, it is easy to understand that,
 We don't list the detailed data for div and sin operation but provide a rough estimation of OpenMP overhead threshold for different operations.
 
 Platform: Platinum 8180
-|Operation|OpenMP overhead threshold|
-|---|---:|
-|contiguous copy|80K|
-|contiguous add |80K|
-|contiguous div	|50K|
-|contiguous exp	|1k	|
-|contiguous sin	|1k | 
+
+|Operation|OpenMP overhead threshold|  
+|---|---:|  
+|contiguous copy|80K|  
+|contiguous add |80K|  
+|contiguous div	|50K|  
+|contiguous exp	|1k	|  
+|contiguous sin	|1k |   
 
 #### 4.2 openmp can speedup most of discontinuous tensor operations
 We choose add and exp operation for discontinuous tensors that are in the range of 1K to 180K as the test case. Official pytorch does not optimize operations for discontinuous tensors with OpenMP but Intel version does. To justify OpenMP also do good in discontinuous tensor operations and find a suitable overhead threshold, we compiled two versions of Pytorch. One is the Official Pytorch with OpenMP overhead threshold set to 800. This overhead threshold has no effect in discontinuous tensor operation, but we set it just to control different variables between Official version and Intel version. The other is the Intel version Pytorch with OpenMP overhead threshold set to 800. We set the threshold to a low value to find the critical point that parallel version exceeds serial one. 
 
-Platform: Platinum 8180
-Operation: add
-Tensor Continuity: discontinuous  
-Unit: microsecond 
+Platform: Platinum 8180  
+Operation: add  
+Tensor Continuity: discontinuous    
+Unit: microsecond   
 
 Time cost result is below:  
 
@@ -180,10 +181,10 @@ Time cost result is below:
 
 Conclusion: Setting the threshold to 10K is good. 
    
-Platform: Platinum 8180
-Operation: exp  
-Tensor Continuity: discontiguous  
-Unit: microsecond  
+Platform: Platinum 8180  
+Operation: exp    
+Tensor Continuity: discontiguous    
+Unit: microsecond    
 
 Time cost result is below:  
 
@@ -215,14 +216,15 @@ From above results, besides conclusions draw from continuous tensor operations, 
   
 We don't list the detailed data for div and sin operation but provide a rough estimation of OpenMP overhead threshold for different operations.
 
-Platform: Platinum 8180
-|Operation|OpenMP overhead threshold|
-|---|---:|
-|discontinuous copy	|20K|
-|discontinuous add 	|20K|	
-|discontinuous div	|10K|
-|discontinuous exp	|1k	|
-|discontinuous sin	|2k | 
+Platform: Platinum 8180  
+  
+|Operation|OpenMP overhead threshold|  
+|-------------------|---:|  
+|discontinuous copy	|20K|  
+|discontinuous add 	|20K|	  
+|discontinuous div	|10K|  
+|discontinuous exp	|1k	|  
+|discontinuous sin	|2k |   
 
 ###4. Conclusions
 - Different operations have their own optimal OpenMP overhead threshold, but 100K is never suitable.
