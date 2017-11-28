@@ -7,7 +7,7 @@ Providing a benchmark for basic element-wise operations with or without optimiza
 Some general conclusions from this benchmark:  
 
 - The OpenMP overhead threshold of official version is too high to help contiguous tensors of small and medium size benefit from OpenMP parallelism.
--	No matter tensors are contiguous or not, most operations can be boosted by OpenMP with our optimization.
+-	Operations of discontiguous tensors can be boosted a lot by using __Intel Pytorch__ .
 -	The optimal OpenMP overhead threshold is dependent on the specific operation and the CPU type.   
 
 This benchmark gives a rough estimation of OpenMP overhead threshold of copy, add, div, exp and sin operation on different types of CPU. We even set the value to 720 in our previous case for OpenNMT and gain good performance.  
