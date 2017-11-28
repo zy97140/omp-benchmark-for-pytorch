@@ -22,7 +22,7 @@ Unit: microsecond
 |150k	|93.20	|9.65	|9.65X|  
 |180k	|111.61	|10.22	|10.92X|  
 
-![](benchmark-charts/skx-discontiguous-copy.png "copy discontiguous tensor")
+![](../benchmark-charts/skx-discontiguous-copy.png "copy discontiguous tensor")
 ***
 Operation: add   
 Tensor Continuity: discontiguous  
@@ -46,7 +46,7 @@ Unit: microsecond
 |150k	|104.25	|9.93	|10.50X|  
 |180k	|124.28	|10.69	|11.63X|   
   
-  ![](benchmark-charts/skx-discontiguous-add.png "add discontiguous tensor")
+  ![](../benchmark-charts/skx-discontiguous-add.png "add discontiguous tensor")
 ***
 Operation: div   
 Tensor Continuity: discontiguous  
@@ -70,7 +70,7 @@ Unit: microsecond
 |150k	|124.01	|9.83	|12.62X|  
 |180k	|147.88	|10.60	|13.95X|    
 
-![](benchmark-charts/skx-discontiguous-div.png "div discontiguous tensor")
+![](../benchmark-charts/skx-discontiguous-div.png "div discontiguous tensor")
 ***
 Operation: exp     
 Tensor Continuity: discontiguous  
@@ -94,7 +94,7 @@ Unit: microsecond
 |150k	|1341.23|37.59	|35.68X|  
 |180k	|1584.88|43.27	|36.62X|  
 
-  ![](benchmark-charts/skx-discontiguous-exp.png "exp discontiguous tensor")
+  ![](../benchmark-charts/skx-discontiguous-exp.png "exp discontiguous tensor")
 ***
 Operation: sin     
 Tensor Continuity: discontiguous  
@@ -118,7 +118,7 @@ Unit: microsecond
 |150k	|889.89	|26.57	|33.50X|  
 |180k	|1068.41|31.07	|34.39X|  
   
-  ![](benchmark-charts/skx-discontiguous-sin.png "sin discontiguous tensor")
+  ![](../benchmark-charts/skx-discontiguous-sin.png "sin discontiguous tensor")
 ***
 Operation: copy       
 Tensor Continuity: contiguous  
@@ -138,7 +138,7 @@ Unit: microsecond
 |80k	|8.28	|5.13	|1.62X|  
 |100k	|17.11	|5.27	|3.25X|  
 
-![](benchmark-charts/skx-contiguous-copy.png "copy contiguous tensor")
+![](../benchmark-charts/skx-contiguous-copy.png "copy contiguous tensor")
 ***
 Operation: add     
 Tensor Continuity: contiguous  
@@ -158,7 +158,7 @@ Unit: microsecond
 |80k	|14.79	|6.60	|2.24X|  
 |100k	|21.97	|6.70	|3.28X|  
 
-![](benchmark-charts/skx-contiguous-add.png "add contiguous tensor")
+![](../benchmark-charts/skx-contiguous-add.png "add contiguous tensor")
 ***
 Operation: div     
 Tensor Continuity: contiguous  
@@ -178,7 +178,7 @@ Unit: microsecond
 |80k	|16.77	|6.75	|2.48X|  
 |100k	|21.06	|7.12	|2.96X|  
 
-![](benchmark-charts/skx-contiguous-div.png "div contiguous tensor")
+![](../benchmark-charts/skx-contiguous-div.png "div contiguous tensor")
 ***
 Operation: exp     
 Tensor Continuity: contiguous  
@@ -198,7 +198,7 @@ Unit: microsecond
 |80k	|623.34	|20.24	|30.80X|  
 |100k	|779.96	|23.58	|33.08X|  
 
-![](benchmark-charts/skx-contiguous-exp.png "exp contiguous tensor")
+![](../benchmark-charts/skx-contiguous-exp.png "exp contiguous tensor")
 ***
 Operation: sin     
 Tensor Continuity: contiguous  
@@ -218,5 +218,5 @@ Unit: microsecond
 |80k	|540.95	|13.49	|40.09X|  
 |100k	|712.20	|17.17	|41.48X|  
 
-![](benchmark-charts/skx-contiguous-sin.png "sin contiguous tensor")
+![](../benchmark-charts/skx-contiguous-sin.png "sin contiguous tensor")
 

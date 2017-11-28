@@ -22,7 +22,7 @@ Unit: microsecond
 |150k|100.00|9.83	|10.17X|
 |180k|119.65|10.37	|11.53X|  
 
-![](benchmark-charts/bdw-discontiguous-copy.png "copy discontiguous tensor")
+![](../benchmark-charts/bdw-discontiguous-copy.png "copy discontiguous tensor")
 ***
 Operation: add   
 Tensor Continuity: discontiguous  
@@ -46,7 +46,7 @@ Unit: microsecond
 |150k|114.74|10.05	|11.41X|  
 |180k|137.13|10.69	|12.82X|  
   
-  ![](benchmark-charts/bdw-discontiguous-add.png "add discontiguous tensor")
+  ![](../benchmark-charts/bdw-discontiguous-add.png "add discontiguous tensor")
 ***
 Operation: div   
 Tensor Continuity: discontiguous  
@@ -70,7 +70,7 @@ Unit: microsecond
 |150k|115.31|10.73	|10.75X|
 |180k|137.86|11.38	|12.12X|  
 
-![](benchmark-charts/bdw-discontiguous-div.png "div discontiguous tensor")
+![](../benchmark-charts/bdw-discontiguous-div.png "div discontiguous tensor")
 ***
 Operation: exp     
 Tensor Continuity: discontiguous  
@@ -94,7 +94,7 @@ Unit: microsecond
 |150k	|1200.41|44.81	|26.79X|  
 |180k	|1439.48|52.61	|27.36X|  
   
-  ![](benchmark-charts/bdw-discontiguous-exp.png "exp discontiguous tensor")
+  ![](../benchmark-charts/bdw-discontiguous-exp.png "exp discontiguous tensor")
 ***
 Operation: sin     
 Tensor Continuity: discontiguous  
@@ -118,7 +118,7 @@ Unit: microsecond
 |150k	|909.86	|32.54	|27.96X|  
 |180k	|1091.06|37.73	|28.92X|  
 
-![](benchmark-charts/bdw-discontiguous-sin.png "sin discontiguous tensor")
+![](../benchmark-charts/bdw-discontiguous-sin.png "sin discontiguous tensor")
 ***
 Operation: copy     
 Tensor Continuity: contiguous  
@@ -138,7 +138,7 @@ Unit: microsecond
 |80k	|24.70	|5.02	|4.92X|  
 |100k	|30.44	|4.80	|6.34X|  
 
-![](benchmark-charts/bdw-contiguous-copy2.png "copy contiguous tensor")
+![](../benchmark-charts/bdw-contiguous-copy2.png "copy contiguous tensor")
 ***
 Operation: add     
 Tensor Continuity: contiguous  
@@ -158,7 +158,7 @@ Unit: microsecond
 |80k	|25.65	|6.57	|3.90X|  
 |100k	|31.61	|6.35	|4.98X|  
 
-![](benchmark-charts/bdw-contiguous-add.png "add contiguous tensor")
+![](../benchmark-charts/bdw-contiguous-add.png "add contiguous tensor")
 ***
 Operation: div     
 Tensor Continuity: contiguous  
@@ -178,7 +178,7 @@ Unit: microsecond
 |80k	|31.59	|6.24	|5.06X|  
 |100k	|38.66	|6.33	|6.10X|  
 
-![](benchmark-charts/bdw-contiguous-div.png "div contiguous tensor")
+![](../benchmark-charts/bdw-contiguous-div.png "div contiguous tensor")
 ***
 Operation: exp     
 Tensor Continuity: contiguous  
@@ -198,7 +198,7 @@ Unit: microsecond
 |80k	|560.95	|22.55	|24.87X|
 |100k	|699.73	|26.47	|26.43X|
 
-![](benchmark-charts/bdw-contiguous-exp.png "exp contiguous tensor")
+![](../benchmark-charts/bdw-contiguous-exp.png "exp contiguous tensor")
 ***
 Operation: sin     
 Tensor Continuity: contiguous  
@@ -218,6 +218,6 @@ Unit: microsecond
 |80k	|533.10	|17.48	|30.49X|  
 |100k	|663.34	|20.65	|32.12X|  
 
-![](benchmark-charts/bdw-contiguous-sin.png "sin contiguous tensor")
+![](../benchmark-charts/bdw-contiguous-sin.png "sin contiguous tensor")
 ***
 
