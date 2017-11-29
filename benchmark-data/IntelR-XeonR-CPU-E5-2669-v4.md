@@ -138,7 +138,7 @@ Unit: microsecond
 |80k	|24.70	|5.02	|4.92X|  
 |100k	|30.44	|4.80	|6.34X|  
 
-![](../benchmark-charts/bdw-contiguous-copy2.png "copy contiguous tensor")
+![](../benchmark-charts/bdw-contiguous-copy.png "copy contiguous tensor")
 ***
 Operation: add     
 Tensor Continuity: contiguous  
