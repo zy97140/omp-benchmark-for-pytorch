@@ -4,7 +4,7 @@ Pytorch element-wise operations optimization benchmark
 ### 1. Abstract
 Providing a benchmark for element-wise operations with or without optimization on different types of CPU. The data of copy, add, div, exp and sin operation is available now.   
 
-Some general conclusions from this benchmark:  
+Some general conclusions from this benchmark is below:   
 
 - The OpenMP overhead threshold of official version is too high to help contiguous tensors of small and medium size benefit from OpenMP parallelism.
 -	Operations of discontiguous tensors can be boosted a lot by using __Intel Pytorch__ .
@@ -14,9 +14,9 @@ This benchmark also gives a rough estimation of optimal OpenMP overhead threshol
 
 ### 2. Our main work
 -	Optimal OpenMP overhead threshold is identified to maximize performance in CPU  
-The OpenMP overhead threshold of official Pytorch is set to 100K. However, we benchmarked copy, add, div, exp, sin operation in both contiguous and discontiguous cases on different CPU types to show that the value is too high. A rough estimation of optimal OpenMP overhead threshold is proposed for those operations.
+The OpenMP overhead threshold of official Pytorch is set to 100K. However, the evidence which is gained by benchmarking copy, add, div, exp, sin operation in both contiguous and discontiguous cases on different CPU types shows that the value is too high. A rough estimation of optimal OpenMP overhead threshold is also proposed for those operations.
 - Many operations of discontiguous tensors are parallelized by using OpenMP  
-Slice operation of tensor is very common in science computation. Using slice operation will generate discontiguous tensor. Meanwhile, [Official Pytorch](https://github.com/pytorch/pytorch) does not support parallelism for discontiguous tensor for the moment. Our main work is tring to fill the blank. You can view the code from the [branch](https://github.com/intel/pytorch/tree/dev-omp2) of Intel Pytorch. We are also engaging to contribute our work to official Pytorch, the corresponding branch is [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).
+Slice operation of tensor is very common in science computation. Using slice operation will generate discontiguous tensor. Meanwhile, [Official Pytorch](https://github.com/pytorch/pytorch) does not support parallelism for discontiguous tensor for the moment. Our main work is tring to fill the blank. You can review the code from the [branch](https://github.com/intel/pytorch/tree/dev-omp2) of Intel Pytorch. We are also engaging to contribute our work to official Pytorch, the corresponding branch is [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp).
 
 
   
@@ -43,8 +43,8 @@ source your-env-path/bin/activate
 If this is done successfully, you could see the virtual environment name in the front of your command line.  
 Now you can install pytorch in this virtual environment without interfering with others. To switch between different virtual environments, you can follow this.
 ```bash
-deactivate ---to exit an environment
-source your-env-path/bin/activate ---to enter an environment
+deactivate #to exit an environment
+source your-env-path/bin/activate #to enter an environment
 ```
 Download Intel pytorch source code.
 ```bash
