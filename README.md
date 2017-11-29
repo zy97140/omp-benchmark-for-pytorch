@@ -90,7 +90,7 @@ Unit: microsecond
 
 Time cost result is below:  
 
-|Tensor Size|serialize|parallelize|SpeedUp|
+|Tensor Size|In series|In parallel|SpeedUp|
 |---|---:|---:|---:|
 |1k	|1.04	|5.15|		0.20X      |
 |2k	|1.23	|5.47|		0.22X      |
@@ -115,7 +115,7 @@ Unit: microsecond
 
 Time cost result is below:  
 
-|Tensor Size|serialize|parallelize|SpeedUp|
+|Tensor Size|In series|In parallel|SpeedUp|
 |---|---:|---:|---:|
 |1k	|9.48	|5.66|		1.67X      |
 |2k	|17.00	|6.35|		2.67X      |
@@ -160,7 +160,7 @@ Unit: microsecond
 
 Time cost result is below:  
 
-|Tensor Size|serialize|parallelize|SpeedUp|
+|Tensor Size|In series|In parallel|SpeedUp|
 |---|---:|---:|---:|
 |1k|	1.69    |	6.98	|	0.24X |
 |2k|	2.42    |	7.47	|	0.32X |
@@ -189,7 +189,7 @@ Unit: microsecond
 
 Time cost result is below:  
 
-|Tensor Size|serialize|parallelize|SpeedUp|
+|Tensor Size|In series|In parallel|SpeedUp|
 |---|---:|---:|---:|
 |1k	|10.02	  |7.27	|	1.37X|
 |2k	|19.01   	|7.83 |	2.42X|
