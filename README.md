@@ -4,29 +4,31 @@ Pytorch element-wise operation optimization benchmark
 ### 1. Abstract
 Providing a benchmark for element-wise operation performance evaluation on CPU.  
 
-|Tested CPU|  
-|:---| 
-|Intel(R) Xeon(R) CPU E5-2699 v4|  
-|Intel(R) Xeon(R) Platinum 8180 CPU|   
+Tested CPU： 
+
+|CPU Model|Sockets|Cores/Socket|Frequency|
+|---|---|---|---|
+|Intel(R) Xeon(R) CPU E5-2699 v4   |2|22|2.20GHz|
+|Intel(R) Xeon(R) Platinum 8180 CPU|2|28|2.50GHz|
+|Intel(R) Core(TM) i7-5960X CPU |1|8|3.00GHz|
   
-|Tested operations|  
-|:---|  
-|copy|  
-|add|  
-|div|  
-|sin|  
-|exp|  
-|sum|  
-|prod|    
+Tested operations:
+
+| | | | | | | |
+|:---|:---|:---|:---|:---|:---|:---|
+|copy|add|div|sin|exp|sum|prod|    
   
 Conclusions:   
 
-* OpenMP threshold(if tensor size is larger than it, the code in the parallel region is executed in parallel. Otherwise is executed in serial by a single thread) 100k of official version is too high to make contiguous tensors of small and medium size benefit from OpenMP parallelism.
+* OpenMP threshold which is set to 100k in official version is too high for contiguous tensors of small and medium size to benefit from OpenMP parallelism.
 *	Discontiguous tensors' operations can be boosted significantly by __Intel Pytorch__ .
 *	The optimal OpenMP threshold is dependent on the operation type and CPU type.  
     - OpenMP threshold becomes smaller for more complex operations.
-    - OpenMP threshold of discontiguous tensor is usually lower than that of contiguous tensor.
-   
+    - OpenMP threshold of discontiguous tensor is usually lower than that of contiguous tensor.  
+
+__annotation__:  
+OpenMP threshold -- If the size of a tensor is larger than the value, the operations run in parallel, otherwise in serial.
+
 This benchmark also gives a rough estimation of optimal OpenMP threshold of copy, add, div, exp, sin, sum and prod operation on different types of CPU.  
   
 For contiguous tensor operation:
@@ -56,9 +58,9 @@ For discontiguous tensor operation:
    
 
 ### 2. Major work
--	Optimal OpenMP threshold is identified to fully exploit performance potential on CPU  
-The OpenMP threshold of official Pytorch is set to 100K. However, the evidence  gained by benchmarking copy, add, div, exp, sin operation in both contiguous and discontiguous cases on different CPU types shows that the value is too high. A rough estimation of optimal OpenMP threshold is also proposed for those operations.
-- Discontiguous tensor operation parallelization with OpenMP   
+-	Optimal OpenMP threshold is identified to fully exploit performance potentiality on CPU  
+The OpenMP threshold of official Pytorch is set to 100K. However, the evidence gained by benchmarking copy, add, div, exp, sin operation in both contiguous and discontiguous cases on different CPU types shows that the value is too high. A rough estimation of optimal OpenMP threshold is also proposed for those operations.
+- Discontiguous tensors' operation parallelization with OpenMP   
 Slice operation of tensor is very common in science computation. Using slice operation will generate discontiguous tensor. Meanwhile, [Official Pytorch](https://github.com/pytorch/pytorch) does not support parallelism of discontiguous tensor at the moment. Our main work is trying to fill this blank.  Code available at [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp) and upstreaming is in progress.
 
   
@@ -71,9 +73,8 @@ Download Intel pytorch source code.
 ```bash
 git clone --recursive -b dev-omp2 https://github.com/intel/pytorch.git
 ```
-Before installing, you should disable the CUDA support, and set the CMAKE_PREFIX_PATH.
+Before installing, you should set the CMAKE_PREFIX_PATH.
 ```
-export NO_CUDA=1
 export CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" # [anaconda root directory]
 ```
 Install intel Pytorch
@@ -88,21 +89,14 @@ python setup.py install
 python benchmark.py <CONTIGUITY> <OPERATION> [OUTPUT FILENAME] 
 ```
 Positional arguments:     
-`CONTIUITY`——display operands' contiguity, can only be chosen from {contiguous, discontiguous}  
-`OPERATION`——display an elementwise operation, can only be chosen from {copy, add, div, sin, exp, sum, prod}   
+`CONTIUITY`—— operands' contiguity, ontiguous/discontiguous
+`OPERATION`—— operation, copyadd/div/sin/exp/sum/prod 
 
 Optional arguments:  
-`--o output filename`——display output filename, output.log is in default  
+`--o output filename`——output filename, output.log is in default  
 
 
 ### 4. The benchmark result
-Benchmark performance is collected on desktop CPU and server CPU as below.
-
-|CPU Model|Sockets|Cores/Socket|Frequency|
-|---|---|---|---|
-|Intel(R) Xeon(R) CPU E5-2699 v4   |2|22|2.20GHz|
-|Intel(R) Xeon(R) Platinum 8180 CPU|2|28|2.50GHz|
-
 
 #### 4.1 Contiguous Tensor Operation OpenMP Threshold Tuning
 Add, exp operation for contiguous tensors whose sizes range from 1K to 100K are listed here as test cases. We compiled two versions of official Pytorch by setting two different OpenMP [threshold](https://github.com/pytorch/pytorch/blob/master/aten/src/TH/generic/THTensorMath.c#L13). The threshold of one version is set to 100K to make all of the test case runs in series. Meanwhile the threshold of the other one is set to 800 to make all of the test case in parallel. 
