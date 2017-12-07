@@ -33,25 +33,25 @@ For contiguous tensor operation:
 
 |   |Xeon(R) Platinum 8180 CPU|Xeon(R) CPU E5-2699 v4|  
 |---|------------------------:|---------------------:|  
-|copy|80k|20k|      
-|add |80k|20k|    
-|div |50k|10k|    
-|exp |1k |1k |    
-|sin |1k |1k |  
-|sum |8k | |      
-|prod|8k | |       
+|copy|80k|20k|20k|        
+|add |80k|20k|20k|      
+|div |50k|10k|10k|      
+|exp |1k |1k |1k |        
+|sin |1k |1k |1k |    
+|sum |8k |1k |1k |        
+|prod|8k |1k |1k |         
 
 For discontiguous tensor operation:    
   
 |---|Xeon(R) Platinum 8180 CPU|Xeon(R) CPU E5-2699 v4|   
 |---|------------------------:|---------------------:|  
-|copy|20k|8k|    
-|add |20k|8k|  
-|div |10k|8k|    
-|exp |1k |1k|    
-|sin |2k |2k|  
-|sum |8k |  |  
-|prod|8k |  |      
+|copy|20k|8k |8k |      
+|add |20k|8k |8k |     
+|div |10k|8k |8k |      
+|exp |1k |1k |1k |      
+|sin |2k |2k |1k |    
+|sum |8k |1k |1k |    
+|prod|8k |1k |1k |        
  
    
 
