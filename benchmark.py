@@ -9,8 +9,8 @@ parser.add_argument("continuity", metavar="continuity",
                     help="display operands' continuity, can only be chosen from contiguous and discontiguous",
                     choices=["contiguous", "discontiguous"])
 parser.add_argument("operation", metavar="operation",
-                    help="display an elementwise operation, can only be chosen from copy, add, div, exp and sin",
-                    choices=["copy", "add", "div", "exp", "sin"])
+                    help="display an elementwise operation, can only be chosen from copy, add, div, exp, sin, sum and prod",
+                    choices=["copy", "add", "div", "exp", "sin", "sum", "prod"])
 parser.add_argument("--o", metavar="output filename", help="display ouput filename", default="output.log", dest="outputfile")
 args = parser.parse_args()
 
@@ -24,6 +24,8 @@ def discontigCopy(size_list):
     inform  = "\ntest discontiguous copy\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = origin.clone()
+        for iter_time in range(1000):
+            y = tensorx1000[tensor_idx].clone()
         start_time = time()
         for iter_time in range(1000):
             y = tensorx1000[tensor_idx].clone()
@@ -39,6 +41,8 @@ def discontigAdd(size_list):
     inform  = "\ntest discontiguous add\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = origin.clone()
+        for iter_time in range(1000):
+            y = tensorx1000[tensor_idx] + 5.5 
         start_time = time()
         for iter_time in range(1000):
             y = tensorx1000[tensor_idx] + 5.5 
@@ -54,6 +58,8 @@ def discontigDiv(size_list):
     inform = "\ntest discontiguous div\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = origin.clone()
+        for iter_time in range(1000):
+            y = torch.div(tensorx1000[tensor_idx], 3)
         start_time = time()
         for iter_time in range(1000):
             y = torch.div(tensorx1000[tensor_idx], 3)
@@ -69,6 +75,8 @@ def discontigSin(size_list):
     inform = "\ntest discontiguous sin\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = origin.clone()
+        for iter_time in range(1000):
+            y = torch.sin(tensorx1000[tensor_idx])
         start_time = time()
         for iter_time in range(1000):
             y = torch.sin(tensorx1000[tensor_idx])
@@ -84,6 +92,8 @@ def discontigExp(size_list):
     inform = "\ntest discontiguous exp\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = origin.clone()
+        for iter_time in range(1000):
+            y = torch.exp(tensorx1000[tensor_idx])
         start_time = time()
         for iter_time in range(1000):
             y = torch.exp(tensorx1000[tensor_idx])
@@ -93,12 +103,48 @@ def discontigExp(size_list):
         exp_time[tensor_size] = interval
     return inform, exp_time
 
+def discontigSum(size_list):
+    tensorx1000 = [origin[:, 2:2+item, :] for item in size_list]
+    sum_time = {}
+    inform = "\ntest discontiguous sum\nsize\t\ttime(us)\n"
+    for tensor_idx in range(len(size_list)):
+        warmup = origin.clone()
+        for iter_time in range(1000):
+            y = torch.sum(tensorx1000[tensor_idx], 0)
+        start_time = time()
+        for iter_time in range(1000):
+            y = torch.sum(tensorx1000[tensor_idx], 0)
+        end_time = time()
+        interval = (end_time - start_time) / 1000
+        tensor_size = '%dk' % size_list[tensor_idx]
+        sum_time[tensor_size] = interval
+    return inform, sum_time
+
+def discontigProd(size_list):
+    tensorx1000 = [origin[:, 2:2+item, :] for item in size_list]
+    prod_time = {}
+    inform = "\ntest discontiguous prod\nsize\t\ttime(us)\n"
+    for tensor_idx in range(len(size_list)):
+        warmup = origin.clone()
+        for iter_time in range(1000):
+            y = torch.prod(tensorx1000[tensor_idx], 0)
+        start_time = time()
+        for iter_time in range(1000):
+            y = torch.prod(tensorx1000[tensor_idx], 0)
+        end_time = time()
+        interval = (end_time - start_time) / 1000
+        tensor_size = '%dk' % size_list[tensor_idx]
+        prod_time[tensor_size] = interval
+    return inform, prod_time
+
 def contiguousCopy(size_list):
     tensorx1000 = [torch.rand(20, n, 50) for n in size_list]
     copy_time = {}
     inform  = "\ntest contiguous copy\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = tensorx1000[tensor_idx].clone()
+        for iter_time in range(1000):
+            y = warmup.clone()
         start_time = time()
         for iter_time in range(1000):
             y = warmup.clone()
@@ -113,8 +159,9 @@ def contiguousAdd(size_list):
     add_time = {}
     inform  = "\ntest contiguous add\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
-        tensor = tensorx1000[tensor_idx].clone()
-        warmup = tensor.clone()
+        warmup = tensorx1000[tensor_idx].clone()
+        for iter_time in range(1000):
+            y = warmup + 5.5
         start_time = time()
         for iter_time in range(1000):
             y = warmup + 5.5 
@@ -131,7 +178,8 @@ def contiguousDiv(size_list):
     x = torch.div( tensorx1000[-1], 3)
     for tensor_idx in range(len(size_list)):
         warmup = tensorx1000[tensor_idx].clone()
-
+        for iter_time in range(1000):
+            y = torch.div(warmup, 3)
         start_time = time()
         for iter_time in range(1000):
             y = torch.div(warmup, 3)
@@ -147,6 +195,8 @@ def contiguousSin(size_list):
     inform = "\ntest contiguous sin\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = tensorx1000[tensor_idx].clone()
+        for iter_time in range(1000):
+            y = torch.sin(warmup)
         start_time = time()
         for iter_time in range(1000):
             y = torch.sin(warmup)
@@ -163,6 +213,8 @@ def contiguousExp(size_list):
     inform = "\ntest contiguous exp\nsize\t\ttime(us)\n"
     for tensor_idx in range(len(size_list)):
         warmup = tensorx1000[tensor_idx].clone()
+        for iter_time in range(1000):
+            y = torch.exp(warmup)
         start_time = time()
         for iter_time in range(1000):
             y = torch.exp(warmup)
@@ -171,6 +223,40 @@ def contiguousExp(size_list):
         tensor_size = '%dk' % size_list[tensor_idx]
         exp_time[tensor_size] = interval
     return inform, exp_time
+
+def contiguousSum(size_list):
+    tensorx1000 = [torch.randn(20, n, 50) for n in size_list]
+    sum_time = {}
+    inform = "\ntest contiguous sum\nsize\t\ttime(us)\n"
+    for tensor_idx in range(len(size_list)):
+        warmup = tensorx1000[tensor_idx].clone()
+        for iter_time in range(1000):
+            y = torch.sum(warmup, 0)
+        start_time = time()
+        for iter_time in range(1000):
+            y = torch.sum(warmup, 0)
+        end_time = time()
+        interval = (end_time - start_time) / 1000
+        tensor_size = '%dk' % size_list[tensor_idx]
+        sum_time[tensor_size] = interval
+    return inform, sum_time
+
+def contiguousProd(size_list):
+    tensorx1000 = [torch.randn(20, n, 50) for n in size_list]
+    prod_time = {}
+    inform = "\ntest contiguous prod\nsize\t\ttime(us)\n"
+    for tensor_idx in range(len(size_list)):
+        warmup = tensorx1000[tensor_idx].clone()
+        for iter_time in range(1000):
+            y = torch.prod(warmup, 0)
+        start_time = time()
+        for iter_time in range(1000):
+            y = torch.prod(warmup, 0)
+        end_time = time()
+        interval = (end_time - start_time) / 1000
+        tensor_size = '%dk' % size_list[tensor_idx]
+        prod_time[tensor_size] = interval
+    return inform, prod_time
 
 if __name__ == '__main__':
     with open(args.outputfile, 'a') as f:
@@ -211,6 +297,20 @@ if __name__ == '__main__':
                     f.write(time + '\t\t' + str(sin_time[time]*1e6))
                     f.write('\n')
                 f.write('\n')
+            elif(args.operation == "sum"):
+                sum_inform, sum_time = contiguousSum(size_list)
+                f.write(sum_inform)
+                for time in sum_time:
+                    f.write(time + '\t\t' + str(sum_time[time]*1e6))
+                    f.write('\n')
+                f.write('\n')
+            elif(args.operation == "prod"):
+                prod_inform, prod_time = contiguousProd(size_list)
+                f.write(prod_inform)
+                for time in prod_time:
+                    f.write(time + '\t\t' + str(prod_time[time]*1e6))
+                    f.write('\n')
+                f.write('\n')
         elif(args.continuity == "discontiguous"):
             if(args.operation == "copy"):
                 copy_inform, copy_time = discontigCopy(size_list)
@@ -245,6 +345,20 @@ if __name__ == '__main__':
                 f.write(sin_inform)
                 for time in sin_time:
                     f.write(time + '\t\t' + str(sin_time[time]*1e6))
+                    f.write('\n')
+                f.write('\n')
+            elif(args.operation == "sum"):
+                sum_inform, sum_time = discontigSum(size_list)
+                f.write(sum_inform)
+                for time in sum_time:
+                    f.write(time + '\t\t' + str(sum_time[time]*1e6))
+                    f.write('\n')
+                f.write('\n')
+            elif(args.operation == "prod"):
+                prod_inform, prod_time = discontigProd(size_list)
+                f.write(prod_inform)
+                for time in prod_time:
+                    f.write(time + '\t\t' + str(prod_time[time]*1e6))
                     f.write('\n')
                 f.write('\n')
 
