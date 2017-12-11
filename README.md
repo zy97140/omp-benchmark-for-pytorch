@@ -14,9 +14,9 @@ Tested CPU：
   
 Tested operations:
 
-| | | | | | | |  |  
-|:---|:---|:---|:---|:---|:---|:---|:---|
-|operations|copy|add|div|sin|exp|sum|prod|   
+| | | | | | | |
+|:---|:---|:---|:---|:---|:---|:---|
+|copy|add|div|sin|exp|sum|prod|   
   
 Conclusions:   
 
