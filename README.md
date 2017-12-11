@@ -89,11 +89,11 @@ python setup.py install
 python benchmark.py <CONTIGUITY> <OPERATION> [OUTPUT FILENAME] 
 ```
 Positional arguments:     
-`CONTIUITY`—— operands' contiguity, ontiguous/discontiguous
+`CONTIUITY`—— operands' contiguity, ontiguous/discontiguous  
 `OPERATION`—— operation, copyadd/div/sin/exp/sum/prod 
 
 Optional arguments:  
-`--o output filename`——output filename, output.log is in default  
+`o output filename`——output filename, output.log is in default  
 
 
 ### 4. The benchmark result
