@@ -14,9 +14,9 @@ Tested CPU：
   
 Tested operations:
 
-| | | | | | | |
-|:---|:---|:---|:---|:---|:---|:---|
-|copy|add|div|sin|exp|sum|prod|    
+| | | | | | | |  |  
+|:---|:---|:---|:---|:---|:---|:---|:---|
+|operations|copy|add|div|sin|exp|sum|prod|   
   
 Conclusions:   
 
@@ -45,7 +45,7 @@ For contiguous tensor operation:
 
 For discontiguous tensor operation:    
   
-|---|Xeon(R) Platinum 8180 CPU|Xeon(R) CPU E5-2699 v4| i7-5960X CPU|  
+||Xeon(R) Platinum 8180 CPU|Xeon(R) CPU E5-2699 v4| i7-5960X CPU|  
 |---|------------------------:|---------------------:|------------:|   
 |copy|20k|8k |2k|          
 |add |20k|8k |2k|         
