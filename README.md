@@ -216,3 +216,26 @@ Conclusions:
 
 - Discontiguous operation can be improved a lot by using OpenMP optimization.
 - OpenMP threshold of discontiguous tensor is usually lower than that of contiguous tensor because the same operation of discontiguous tensor is more time-consuming than contiguous tensor. 
+
+
+#### 4.3 LSTM benchmark test
+To consolidate the performance boost benefiting from the elementwise optimization, we choose the a widely-used RNN unit: LSTM as the model-level benchmark reference. This is because:
+1. LSTM related computations involve considerable elementwise operations;
+2. PyTorch provides a scalable and flexible Python API to execute LSTM computation.
+
+Conclusion: 
+According to the benchmarks retrieved on Intel Xeon Platinum 8180, 
+1. For LSTM inference (forward-only), the performance is get boosted from xx to xx.
+2. For LSTM training (forward + backward), the performance is get boosted from xx to xx.
+
+We retrieve the LSTM benchmark via the script:  https://github.com/xhzhao/pytorch-rnn-benchmark , and in which, 
+1. The Python API torch.nn.LSTM is used as the entry of LSTM computation. 
+2. We run the benchmarks on 24 selective input shapes utilized by different NLP models, 
+3. The unit for benchmarks is Sentence Per Second (SPS). 
+[N, T, D, Z] stands for batch size, embedding size, sentence length and hidden size.
+Specifically, 
+The [64, 50, 500, 500] is used by OpenNMT. The [64, 25, 4096, 4096] is used by Deepbench.
+
+Test results analysis:
+1. For inference benchmarks: As the contributions of elementwise operation varies from the different input shapes,  it is expected the performance boosts are not uniform with input shape changing. 
+2. For training benchmarks: Apart from sharing the same reason of inference benchmarks. As the backward computation gains less from the elementwise optimization, it is expected the performance boosts on training benchmarks are not outstanding as inference benchmarks, and not uniform with input shape changing.
