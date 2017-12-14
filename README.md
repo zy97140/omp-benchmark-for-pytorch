@@ -233,7 +233,7 @@ Tested CPU：
 
 On Xeon Platinum-8180: Inference
 
-|LSTM	Input Shape|Xeon Platinum 8180 OOB|Xeon Platinum 8180-Optimized|Speed-up|
+|LSTM	Input Shape|Xeon Platinum 8180 OOB|Xeon Platinum 8180 Optimized|Speed-up|
 |---|---:|---:|---:|
 |[64, 15, 500, 500]|899.4494|7393.76|__|
 |[64, 20, 500, 500]|937.1688|5895.53|__|
@@ -262,7 +262,7 @@ On Xeon Platinum-8180: Inference
 
 On Xeon Platinum-8180: Training
 
-|LSTM	Input Shape|Xeon Platinum 8180 OOB|Xeon Platinum 8180-Optimized|Speed-up|
+|LSTM	Input Shape|Xeon Platinum 8180 OOB|Xeon Platinum 8180 Optimized|Speed-up|
 |---|---:|---:|---:|
 |[64, 15, 500, 500] |432.5038|740.19|__|
 |[64, 20, 500, 500] |385.2532|506.49|__|
@@ -294,7 +294,7 @@ On Xeon(R) CPU E5-2699 v4: Inference
 
 |LSTM	Input Shape|Xeon E5-2699 OOB|Xeon E5-2699 Optimized|Speed-up|
 |---|---:|---:|---:|
-||[64, 15, 500, 500]|1169.737|6135.84|__|
+|[64, 15, 500, 500]|1169.737|6135.84|__|
 |[64, 20, 500, 500]|923.5499|5367.74|__|
 |[64, 25, 500,500]|739.8101|1479.79|__|
 |[64, 30, 500,500]|618.0939|4087.51|__|
