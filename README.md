@@ -58,7 +58,7 @@ For discontiguous tensor operation:
    
 
 ### 2. Major work
--	Optimal OpenMP threshold is identified to fully exploit performance potentiality on CPU  
+-	Optimal OpenMP threshold is identified to fully exploit performance potentiality on CPU  
 The OpenMP threshold of official Pytorch is set to 100K. However, the evidence gained by benchmarking copy, add, div, exp, sin operation in both contiguous and discontiguous cases on different CPU types shows that the value is too high. A rough estimation of optimal OpenMP threshold is also proposed for those operations.
 - Discontiguous tensors' operation parallelization with OpenMP   
 Slice operation of tensor is very common in science computation. Using slice operation will generate discontiguous tensor. Meanwhile, [Official Pytorch](https://github.com/pytorch/pytorch) does not support parallelism of discontiguous tensor at the moment. Our main work is trying to fill this blank.  Code available at [__dev-omp__](https://github.com/intel/pytorch/tree/dev-omp) and upstreaming is in progress.
@@ -90,7 +90,7 @@ python benchmark.py <CONTIGUITY> <OPERATION> [OUTPUT FILENAME]
 ```
 Positional arguments:     
 `CONTIUITY`—— operands' contiguity, ontiguous/discontiguous  
-`OPERATION`—— operation, copyadd/div/sin/exp/sum/prod 
+`OPERATION`—— operation, copy/add/div/sin/exp/sum/prod 
 
 Optional arguments:  
 `o output filename`——output filename, output.log is in default  
