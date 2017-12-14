@@ -232,6 +232,7 @@ Tested CPU：
 |Intel(R) Core(TM) i7-5960X CPU |1|8|3.00GHz|
 
 On Xeon Platinum-8180: Inference
+
 |LSTM	Input Shape|Xeon Platinum 8180 OOB|Xeon Platinum 8180-Optimized|Speed-up|
 |---|---:|---:|---:|
 |[64, 15, 500, 500]|899.4494|7393.76|__|
@@ -260,6 +261,7 @@ On Xeon Platinum-8180: Inference
 |[128, 25, 4096, 4096]|61.866|97.97|__|
 
 On Xeon Platinum-8180: Training
+
 |LSTM	Input Shape|Xeon Platinum 8180 OOB|Xeon Platinum 8180-Optimized|Speed-up|
 |---|---:|---:|---:|
 |[64, 15, 500, 500] |432.5038|740.19|__|
