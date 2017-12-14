@@ -224,7 +224,7 @@ To consolidate the performance boost benefiting from the elementwise optimizatio
 2. PyTorch provides a scalable and flexible Python API to execute LSTM computation.
 
 |LSTM	|Xeon Platinum 8180 OOB|Xeon Platinum 8180-Optimized|Speed-up|
-|__---|---:|---:|---:|
+|---|---:|---:|---:|
 |__[64, 15, 500, 500]|__899.4494|__7393.76|__|
 |__[64, 20, 500, 500]|__937.1688|__5895.53|__|
 |__[64, 25, 500,500]|__750.8159|__4808.17|__|
