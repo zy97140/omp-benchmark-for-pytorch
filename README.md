@@ -363,6 +363,7 @@ According to the benchmarks retrieved on Intel Xeon Platforms,
 On Platinum 8180:
 1. For LSTM inference (forward-only), the performance is get boosted from 1.25X to 8.22X.
 2. For LSTM training (forward + backward), the performance is get boosted from 1.23X to 1.74X.
+
 On E5-2699 V4:
 1. For LSTM inference (forward-only), the performance is get boosted from 1.64X to 7.56X.
 2. For LSTM training (forward + backward), the performance is get boosted from 1.01X to 3.03X.
